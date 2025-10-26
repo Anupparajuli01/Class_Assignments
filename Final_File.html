@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiroshima: Nature, Memory & Resilience</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: #2c3e50;
+            background: #f8f9fa;
+        }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a 0%, #4a4a4a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .plant-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .plant {
+            position: absolute;
+            bottom: 0;
+            animation: growPlant 3s ease-out forwards;
+            opacity: 0;
+            transform-origin: bottom center;
+        }
+
+        @keyframes growPlant {
+            0% {
+                transform: scaleY(0);
+                opacity: 0;
+            }
+            30% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: scaleY(1);
+                opacity: 0.8;
+            }
+        }
+
+        .plant1 { left: 10%; animation-delay: 0.5s; }
+        .plant2 { left: 25%; animation-delay: 1s; }
+        .plant3 { left: 40%; animation-delay: 1.5s; }
+        .plant4 { left: 60%; animation-delay: 2s; }
+        .plant5 { left: 75%; animation-delay: 2.5s; }
+        .plant6 { left: 90%; animation-delay: 3s; }
+
+        .stem {
+            width: 6px;
+            height: 180px;
+            background: linear-gradient(to top, #1b3a0f, #4a7c2c, #5a9c3c);
+            margin: 0 auto;
+            transform-origin: bottom center;
+            position: relative;
+            border-radius: 3px;
+        }
+
+        .leaf {
+            position: absolute;
+            width: 35px;
+            height: 18px;
+            background: linear-gradient(135deg, #4CAF50, #66BB6A);
+            border-radius: 50% 0;
+            animation: leafGrow 1s ease-out forwards;
+            opacity: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        @keyframes leafGrow {
+            0% {
+                transform: scale(0) rotate(-90deg);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .leaf-left {
+            left: -30px;
+            transform-origin: right center;
+            animation-delay: inherit;
+        }
+
+        .leaf-right {
+            right: -30px;
+            transform-origin: left center;
+            transform: scaleX(-1);
+            animation-delay: inherit;
+        }
+
+        .leaf1 { 
+            top: 25%; 
+            animation-delay: 1.5s; 
+        }
+        .leaf2 { 
+            top: 50%; 
+            animation-delay: 2s; 
+        }
+        .leaf3 { 
+            top: 75%; 
+            animation-delay: 2.5s; 
+        }
+
+        .flower {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: flowerBloom 1.5s ease-out forwards;
+            animation-delay: 3s;
+            opacity: 0;
+            width: 50px;
+            height: 50px;
+        }
+
+        @keyframes flowerBloom {
+            0% {
+                transform: translateX(-50%) scale(0);
+                opacity: 0;
+            }
+            60% {
+                transform: translateX(-50%) scale(1.1);
+            }
+            100% {
+                transform: translateX(-50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .petal {
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 50%, #c44569 100%);
+            border-radius: 50% 50% 0 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .petal:nth-child(1) { 
+            transform: translate(-50%, -50%) rotate(0deg) translateY(-15px); 
+        }
+        .petal:nth-child(2) { 
+            transform: translate(-50%, -50%) rotate(72deg) translateY(-15px); 
+        }
+        .petal:nth-child(3) { 
+            transform: translate(-50%, -50%) rotate(144deg) translateY(-15px); 
+        }
+        .petal:nth-child(4) { 
+            transform: translate(-50%, -50%) rotate(216deg) translateY(-15px); 
+        }
+        .petal:nth-child(5) { 
+            transform: translate(-50%, -50%) rotate(288deg) translateY(-15px); 
+        }
+
+        .flower-center {
+            width: 15px;
+            height: 15px;
+            background: radial-gradient(circle, #ffd700, #ffed4e);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+            z-index: 10;
+        }
+
+        .ground {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, transparent, rgba(76, 175, 80, 0.5), transparent);
+            animation: groundGrow 2s ease-out forwards;
+            transform-origin: center;
+            transform: scaleX(0);
+        }
+
+        @keyframes groundGrow {
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        .falling-flowers {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .falling-flower {
+            position: absolute;
+            top: -50px;
+            animation: fall linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes fall {
+            0% {
+                top: -50px;
+                opacity: 0;
+                transform: translateX(0) rotate(0deg);
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                top: 100vh;
+                opacity: 0;
+                transform: translateX(var(--drift)) rotate(360deg);
+            }
+        }
+
+        .cherry-blossom {
+            width: 20px;
+            height: 20px;
+            position: relative;
+        }
+
+        .cherry-petal {
+            position: absolute;
+            width: 8px;
+            height: 12px;
+            background: linear-gradient(135deg, #ffb3d9 0%, #ff69b4 100%);
+            border-radius: 50% 50% 0 50%;
+            top: 50%;
+            left: 50%;
+        }
+
+        .cherry-petal:nth-child(1) { transform: translate(-50%, -50%) rotate(0deg) translateY(-6px); }
+        .cherry-petal:nth-child(2) { transform: translate(-50%, -50%) rotate(72deg) translateY(-6px); }
+        .cherry-petal:nth-child(3) { transform: translate(-50%, -50%) rotate(144deg) translateY(-6px); }
+        .cherry-petal:nth-child(4) { transform: translate(-50%, -50%) rotate(216deg) translateY(-6px); }
+        .cherry-petal:nth-child(5) { transform: translate(-50%, -50%) rotate(288deg) translateY(-6px); }
+
+        .cherry-center {
+            width: 4px;
+            height: 4px;
+            background: #fff59d;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        .camellia-petal {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: linear-gradient(135deg, #ff6b9d 0%, #e91e63 100%);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+        }
+
+        .camellia-petal:nth-child(1) { transform: translate(-50%, -50%) translateY(-5px); }
+        .camellia-petal:nth-child(2) { transform: translate(-50%, -50%) translateX(5px) translateY(-2px); }
+        .camellia-petal:nth-child(3) { transform: translate(-50%, -50%) translateX(5px) translateY(2px); }
+        .camellia-petal:nth-child(4) { transform: translate(-50%, -50%) translateY(5px); }
+        .camellia-petal:nth-child(5) { transform: translate(-50%, -50%) translateX(-5px) translateY(2px); }
+        .camellia-petal:nth-child(6) { transform: translate(-50%, -50%) translateX(-5px) translateY(-2px); }
+
+        .camellia-center {
+            width: 6px;
+            height: 6px;
+            background: #ffd54f;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        .lotus {
+            width: 22px;
+            height: 22px;
+            position: relative;
+        }
+
+        .lotus-petal {
+            position: absolute;
+            width: 8px;
+            height: 14px;
+            background: linear-gradient(135deg, #f8bbd0 0%, #f48fb1 100%);
+            border-radius: 50% 50% 50% 0;
+            top: 50%;
+            left: 50%;
+        }
+
+        .lotus-petal:nth-child(1) { transform: translate(-50%, -50%) rotate(0deg) translateY(-7px); }
+        .lotus-petal:nth-child(2) { transform: translate(-50%, -50%) rotate(60deg) translateY(-7px); }
+        .lotus-petal:nth-child(3) { transform: translate(-50%, -50%) rotate(120deg) translateY(-7px); }
+        .lotus-petal:nth-child(4) { transform: translate(-50%, -50%) rotate(180deg) translateY(-7px); }
+        .lotus-petal:nth-child(5) { transform: translate(-50%, -50%) rotate(240deg) translateY(-7px); }
+        .lotus-petal:nth-child(6) { transform: translate(-50%, -50%) rotate(300deg) translateY(-7px); }
+
+        .lotus-center {
+            width: 5px;
+            height: 5px;
+            background: #ffeb3b;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        .plum-blossom {
+            width: 16px;
+            height: 16px;
+            position: relative;
+        }
+
+        .plum-petal {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+        }
+
+        .plum-petal:nth-child(1) { transform: translate(-50%, -50%) translateY(-5px); }
+        .plum-petal:nth-child(2) { transform: translate(-50%, -50%) rotate(72deg) translateY(-5px); }
+        .plum-petal:nth-child(3) { transform: translate(-50%, -50%) rotate(144deg) translateY(-5px); }
+        .plum-petal:nth-child(4) { transform: translate(-50%, -50%) rotate(216deg) translateY(-5px); }
+        .plum-petal:nth-child(5) { transform: translate(-50%, -50%) rotate(288deg) translateY(-5px); }
+
+        .plum-center {
+            width: 3px;
+            height: 3px;
+            background: #fff176;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .hero-date {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            letter-spacing: 4px;
+        }
+
+        .hero-quote {
+            font-size: 1.3rem;
+            font-style: italic;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+
+        nav a:hover {
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #1a1a1a;
+            border-left: 6px solid #4CAF50;
+            padding-left: 1rem;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: #2c3e50;
+        }
+
+        .quote-block {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+            border-left: 4px solid #4CAF50;
+            padding: 2rem;
+            margin: 2rem 0;
+            font-style: italic;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .quote-block::before {
+            content: '"';
+            font-size: 4rem;
+            color: rgba(76, 175, 80, 0.3);
+            position: absolute;
+            top: -10px;
+            left: 10px;
+        }
+
+        .image-placeholder {
+        background: #f5f5f5;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        border-radius: 8px;
+        border: 2px dashed #ccc;
+        text-align: center;
+        /* max-width: 600px; */
+        margin-left: auto;
+        margin-right: auto;
+        }
+
+        .image-placeholder img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 6px;
+        margin-bottom: 0.75rem;
+        }
+
+        .image-placeholder strong {
+        display: block;
+        font-size: 1.1rem;
+        color: #333;
+        margin-bottom: 0.5rem;
+        }
+
+        .image-placeholder p {
+        font-size: 0.9rem;
+        color: #666;
+        font-style: italic;
+        margin: 0;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #c62828;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .tree-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .tree-card {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .tree-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .tree-card h4 {
+            color: #2e7d32;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-quote {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="falling-flowers" id="fallingFlowers"></div>
+        <div class="plant-container">
+            <div class="ground"></div>
+            <div class="plant plant1">
+                <div class="stem">
+                    <div class="leaf leaf-left leaf1"></div>
+                    <div class="leaf leaf-right leaf1"></div>
+                    <div class="leaf leaf-left leaf2"></div>
+                    <div class="leaf leaf-right leaf2"></div>
+                    <div class="leaf leaf-left leaf3"></div>
+                    <div class="leaf leaf-right leaf3"></div>
+                    <div class="flower">
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="flower-center"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="plant plant2">
+                <div class="stem">
+                    <div class="leaf leaf-left leaf1"></div>
+                    <div class="leaf leaf-right leaf1"></div>
+                    <div class="leaf leaf-left leaf2"></div>
+                    <div class="leaf leaf-right leaf2"></div>
+                    <div class="flower">
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="flower-center"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="plant plant3">
+                <div class="stem">
+                    <div class="leaf leaf-left leaf1"></div>
+                    <div class="leaf leaf-right leaf1"></div>
+                    <div class="leaf leaf-left leaf2"></div>
+                    <div class="leaf leaf-right leaf2"></div>
+                    <div class="leaf leaf-left leaf3"></div>
+                    <div class="leaf leaf-right leaf3"></div>
+                    <div class="flower">
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="flower-center"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="plant plant4">
+                <div class="stem">
+                    <div class="leaf leaf-left leaf1"></div>
+                    <div class="leaf leaf-right leaf1"></div>
+                    <div class="leaf leaf-left leaf2"></div>
+                    <div class="leaf leaf-right leaf2"></div>
+                    <div class="flower">
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="flower-center"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="plant plant5">
+                <div class="stem">
+                    <div class="leaf leaf-left leaf1"></div>
+                    <div class="leaf leaf-right leaf1"></div>
+                    <div class="leaf leaf-left leaf2"></div>
+                    <div class="leaf leaf-right leaf2"></div>
+                    <div class="leaf leaf-left leaf3"></div>
+                    <div class="leaf leaf-right leaf3"></div>
+                    <div class="flower">
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="flower-center"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="plant plant6">
+                <div class="stem">
+                    <div class="leaf leaf-left leaf1"></div>
+                    <div class="leaf leaf-right leaf1"></div>
+                    <div class="leaf leaf-left leaf2"></div>
+                    <div class="leaf leaf-right leaf2"></div>
+                    <div class="flower">
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="flower-center"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-content">
+            <h1>Hiroshima</h1>
+            <div class="hero-date">AUGUST 6, 1945 | 8:15 AM</div>
+            <p class="hero-quote">"There won't be any trees and flowers growing back from Hiroshima soil at least for 75 years..."<br><br>But nature had other plans.</p>
+        </div>
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="#impact">The Bomb</a></li>
+            <li><a href="#resilience">Nature's Return</a></li>
+            <li><a href="#restoration">Restoration</a></li>
+            <li><a href="#legacy">Green Legacy</a></li>
+            <li><a href="#lessons">Lessons</a></li>
+        </ul>
+    </nav>
+
+    <section id="impact">
+        <h2>The Atomic Bomb</h2>
+        
+        <p>At 8:15 AM on August 6, 1945, the world's first atomic bomb destroyed Hiroshima. Code-named 'Little Boy', the bomb exploded 600 meters above the city center. The destruction was absolute and unprecedented.Buildings and trees within 2 km of the epicenter were burned down. Most houses within 3 km collapsed. The city became "a desert on the moon" with nothing left but rubble, ash, and twisted steel. This moment of devastation is the starting point of my Creative Journal capturing both the silence and the resilience that followed.</p>
+
+        <div class="stats-container">
+            <div class="stat-box">
+                <span class="stat-number">80,000</span>
+                <span class="stat-label">Immediate deaths</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">12 km²</span>
+                <span class="stat-label">Area leveled and burned</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">2 km</span>
+                <span class="stat-label">Radius of total devastation</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">210,000</span>
+                <span class="stat-label">Total deaths by year's end</span>
+            </div>
+        </div>
+
+        <div class="image-placeholder">
+           <strong> <img src="https://www.telegraph.co.uk/multimedia/archive/01217/04-hiroshima_1217993i.jpg?imwidth=1280 "></strong>
+            <p> Photograph of Hiroshima one month after the bombing showing complete devastation| Credit: CECIL A CREBER</p>
+        </div>
+
+        <div class="quote-block">
+            Split second, can't see anything, couldn't breathe, thinking in my head "this must be death". When things got calm, Hiroshima had already turned into ashes.
+            <br><em>— Survivor testimony</em>
+        </div>
+    </section>
+
+    <section id="resilience">
+        <h2>Nature's Remarkable Return</h2>
+
+        <h3>The First Flower</h3>
+        <p>One testimony stood out to me: the belief that no tree or flower would grow from Hiroshima’s soil for 75 years. The words carry both hopelessness and the seed of defiance. My reflection draws on this: how nature, against expectation, became a companion in human healing. In my design, I illustrated plants rising from darkness to mirror fragile shoots piercing scorched soil. This symbolizes how survivors and nature both found ways to emerge after catastrophe. It is not only about biological survival, but about the renewal of spirit and the synchrony between human and natural healing.</p><br>
+ <p> In autumn 1945, just months after the bombing, a Canna indica bloomed within one kilometer of the epicenter. This single flower changed everything. When the human beings saw the tree growing back, they felt hope... The tree gave them the courage to live. </p>
+        <div class="image-placeholder">
+            <strong><img src="https://hpmmuseum.jp/virtual/img/ex0603_img/53kanna.jpg "></strong>
+            <p>Black and white photograph of the first Canna indica flower blooming in the rubble.</p>
+        </div>
+
+        <h3>The 161 Survivor Trees</h3>
+        <p>Within 2 km of the hypocenter, 161 trees survived. Today they are officially registered as hibakujumoku(A-bombed) trees. Each is marked with a plaque and lovingly cared for by citizens.</p>
+
+        <div class="tree-grid">
+            <div class="tree-card">
+                <h4>🌳 Camphor (Kusunoki)</h4>
+                <p>45% of all survivors (61 trees). Strong resprouting ability made them resilient to fire and radiation.</p>
+            </div>
+            <div class="tree-card">
+                <h4>🍃 Ginkgo Biloba</h4>
+                <p>Ancient species, 270 million years old. Particularly resistant to pollution, disease, and fire. A 300 year old ginkgo in Shukkeien Garden survived.</p>
+            </div>
+            <div class="tree-card">
+                <h4>🌸 Weeping Willow</h4>
+                <p>The closest survivor, just 370 meters from hypocenter. Completely destroyed above ground, but resprouted. Now 30 inches in diameter.</p>
+            </div>
+            <div class="tree-card">
+                <h4>🌺 Other Species</h4>
+                <p>25 different species total, including cherry, oleander, pine, hackberry, eucalyptus, and wisteria. Each with unique survival story.</p>
+            </div>
+        </div>
+
+        <div class="image-placeholder">
+            <strong> <img src="https://lh5.ggpht.com/-xC7QYppDgcU/UUNUWXiokSI/AAAAAAAAmUU/nQ3Ur1JlwHE/a-bombed-trees-5%25255B2%25255D.jpg?imgmax=800"> 
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjB2y68thTzSVk4PzN2M4R8FJuQJnLk5bxk3LDniMe5T51v9fUkKMuGgByDc7lQmh8v3qy6IFjDdffaY4AR3noq_Sb88X3mds3_g2vr7VbipnVpRiVLCLPYq6T4l4WRjM8GtIlyL53tIZ5C/?imgmax=800">
+            </strong>
+            <p> A-bombed survivor trees showing fire scars, inclined growth, and commemorative plaques</p>
+        </div>
+
+        <div class="quote-block">
+            As a survivor of the bombing, I felt that it was my responsibility to record the damage.
+            <br><em>— Katsuda Shinnō, 1947</em>
+        </div>
+    </section>
+
+
+    <section id="restoration">
+        <h2>60 Years of Urban Forest Restoration</h2>
+
+        <p>The trees that endured, the hibakujumoku, became powerful symbols of continuity. My website layers animation and testimony, echoing how memory itself is personal layered, ecological, and historical. Coding these growth sequences became a metaphor for regeneration: rebuilding line by line, much like Hiroshima itself.</p>
+
+        <h3>Three Stages of Recovery</h3>
+        
+        <p><strong>1945-1970: System-Making</strong><br>
+        First Greenery Campaign (1954): Mayors across Japan donated trees. Approximately 1,300 tall trees planted. Peace Memorial Park (12.21 ha) established. Initial survival rates very low—only 4% in first attempts due to harsh conditions.</p>
+
+        <p><strong>1975-1994: System-Working</strong><br>
+        Second Greenery Campaign (1975-1980): Citizens participated for first time through Greenery Promotion Committee. Mayor's 1957 tree donation campaign brought 7,000 large trees from neighboring communities with 55% survival rate.</p>
+
+        <p><strong>1994-Present: Self-Management</strong><br>
+        Third Greenery Campaign (1996): Government-citizen collaboration flourished. Master Plan of Greenery (2001) finally recognized biodiversity conservation. Focus shifted to private greenery, rooftop gardens, and ecological networks.</p>
+
+        <div class="image-placeholder">
+            <strong><img src="https://image.dive-hiroshima.com/wp-content/uploads/2025/03/01_DSC2869-2-scaled-1024x683.jpg"></strong>
+            <p>Present Hiroshima with resilience.</p>
+        </div>
+
+    </section>
+
+    <section id="legacy">
+        
+        <h2>Green Legacy Hiroshima Initiative</h2>
+
+        <p>Founded in 2011 by Watanabe Tomoko and Nassrine Azimi, Green Legacy Hiroshima shares seeds and saplings from survivor trees worldwide creating living memorials to peace and resilience.</p>
+
+        <h3>The Mission: A 1000-Year Project</h3>
+        <p> Green Legacy shares the double message of caution and hope: recalling the dangers of nuclear weapons while celebrating the sacred character of life and the resilience of nature. Seeds and saplings grow in more than 35 countries in a sustained, long-term campaign for a nuclear-free and more sustainable planet. Descendants of Hiroshima's survivor trees now grow from Afghanistan to Chile, Singapore to the Netherlands, Lithuania to New Zealand. In Geneva, a robust Ginkgo biloba from Shukkeien Garden grows at the International Committee of the Red Cross. Former UN Secretary-General Ban Ki Moon planted another in Arianna Park.</p>
+
+        <div class="image-placeholder">
+            <strong><img src="https://www.hiroshimapeacemedia.jp/blog/wp-content/uploads/2019/11/9529fac10ef40f4d929e26c8b87ff908-948x1024.jpg"></strong>
+            <p>World map showing locations of Green Legacy partner institutions across 41 countries</p>
+        </div>
+
+
+        <div class="quote-block">
+            Honoring these trees and their descendants can convey, as much as words, the dangers of weapons of mass destruction but also the sacred character of nature and our planet Earth.
+            <br><em>— Nassrine Azimi, Green Legacy Co-founder</em>
+        </div>
+        </div>
+    </section>
+
+    <section id="lessons">
+        <h2>Lessons for the Future</h2>
+       
+        <p> The bombing of Hiroshima delivered a sharp but brief burst of radiation, while later nuclear accidents such as Chernobyl in 1986 and Fukushima in 2011 left behind long-lasting contamination. This difference shaped the way environments and communities recovered. In Hiroshima, the first signs of plants reappeared within two months, and abnormalities in growth had largely disappeared after a few years. By contrast, the lands around Chernobyl remain unsafe decades later, while the destructive potential of modern nuclear weapons far surpasses past events.</p>
+    <br>
+        
+        <p>The reflections from these comparisons highlight several key insights. Nature proved resilient in Hiroshima, but there are limits. Modern nuclear weapons would leave no chance for recovery. Survivors also spoke of a synchrony between their own healing and the return of plants and earthy materials, suggesting that human resilience is intertwined with natural regeneration. Community efforts played a vital role as well, with citizens donating trees and cultivating green spaces, which provided both physical renewal and psychological comfort. Finally, the city’s recovery was not quick: it took decades of consistent planning and action, showing that long-term commitment is essential for restoring balance after devastation.</p>
+
+
+        <div class="quote-block">
+            The phenomenon of healing is wholistic and unitary, being experienced within the complex and constant biodance. Personal emergence generates through synchronization of one's own internal and external rhythmic patterns.<br> <em>- Nagata et al. (2022)</em>
+        </div>
+        <div class="image-placeholder">
+            <strong><img src ="https://peacemuseum.wp.st-andrews.ac.uk/files/2023/12/hiroshima-peace-memeorial-park.jpeg"> </strong>
+            <p>Modern Peace Memorial Park with A-Bomb Dome</p>
+        </div>
+
+        <p>Today, Peace Memorial Park remains Hiroshima's spiritual center, the most visited site in Japan by foreigners, the most sacred place for Hibakusha and their descendants. The survivor trees stand throughout the city as living testaments to resilience.</p>
+<br>
+            The survivor trees of Hiroshima stand as living testament to nature's resilience and humanity's capacity for renewal. From the ashes of August 6, 1945, green shoots emerged. From broken trunks, new branches grew. From scorched earth, forests returned. These trees teach us that healing is possible, but only if we commit ourselves fully to peace, environmental stewardship, and the protection of all life on Earth. 
+
+            <br><br>
+        <p>Ultimately, my reflection is not a reproduction of history but an exploration of its echoes. By emphasizing resilience and ecological rebirth, I wanted the project to leave audiences with a sense of renewal that even in the darkest soil, life insists on returning. It is both a memory and a message: a call for peace, rooted in Hiroshima’s story.</p>
+    </section>
+
+    <footer>
+        <p style="font-size: 1.2rem; margin-bottom: 1rem;"><strong>May we never forget. May we always choose peace.</strong></p>
+        <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.8;">Sources: Nature Immersion in an Extreme Environment: Hiroshima Survivors' Personal Emergence (Int. J. Environ. Res. Public Health 2022) | Restoration of the urban forests of Tokyo and Hiroshima following World War II (Urban Forestry & Urban Greening 2006) | Recovery of greenery resources in Hiroshima City after World War II (Landscape Ecol Eng 2006) | Greening Atomic Bomb Survivor Trees (ASIANetwork Exchange 2019) | Green Legacy Hiroshima Initiative (UNITAR) | History of the impact of radiation on the environment: Hiroshima bomb (E3S Web of Conferences 2024)</p>
+        <p style="margin-top: 1rem; font-size: 0.85rem; opacity: 0.6;">Website created for Pacific Basin Creative Journal Assignment| October 2025</p>
+    </footer>
+
+    <script>
+        // Create falling flowers
+        const fallingFlowersContainer = document.getElementById('fallingFlowers');
+        const flowerTypes = ['cherry-blossom', 'camellia', 'lotus', 'plum-blossom'];
+        
+        function createFlower(type) {
+            const flower = document.createElement('div');
+            flower.className = 'falling-flower';
+            
+            let flowerHTML = '';
+            
+            if (type === 'cherry-blossom') {
+                flowerHTML = `
+                    <div class="cherry-blossom">
+                        <div class="cherry-petal"></div>
+                        <div class="cherry-petal"></div>
+                        <div class="cherry-petal"></div>
+                        <div class="cherry-petal"></div>
+                        <div class="cherry-petal"></div>
+                        <div class="cherry-center"></div>
+                    </div>
+                `;
+            } else if (type === 'camellia') {
+                flowerHTML = `
+                    <div class="camellia">
+                        <div class="camellia-petal"></div>
+                        <div class="camellia-petal"></div>
+                        <div class="camellia-petal"></div>
+                        <div class="camellia-petal"></div>
+                        <div class="camellia-petal"></div>
+                        <div class="camellia-petal"></div>
+                        <div class="camellia-center"></div>
+                    </div>
+                `;
+            } else if (type === 'lotus') {
+                flowerHTML = `
+                    <div class="lotus">
+                        <div class="lotus-petal"></div>
+                        <div class="lotus-petal"></div>
+                        <div class="lotus-petal"></div>
+                        <div class="lotus-petal"></div>
+                        <div class="lotus-petal"></div>
+                        <div class="lotus-petal"></div>
+                        <div class="lotus-center"></div>
+                    </div>
+                `;
+            } else if (type === 'plum-blossom') {
+                flowerHTML = `
+                    <div class="plum-blossom">
+                        <div class="plum-petal"></div>
+                        <div class="plum-petal"></div>
+                        <div class="plum-petal"></div>
+                        <div class="plum-petal"></div>
+                        <div class="plum-petal"></div>
+                        <div class="plum-center"></div>
+                    </div>
+                `;
+            }
+            
+            flower.innerHTML = flowerHTML;
+            
+            // Random position
+            const leftPosition = Math.random() * 100;
+            flower.style.left = leftPosition + '%';
+            
+            // Random duration (8-15 seconds for slow fall)
+            const duration = 8 + Math.random() * 7;
+            flower.style.animationDuration = duration + 's';
+            
+            // Random delay
+            const delay = Math.random() * 5;
+            flower.style.animationDelay = delay + 's';
+            
+            // Random drift
+            const drift = (Math.random() - 0.5) * 100;
+            flower.style.setProperty('--drift', drift + 'px');
+            
+            fallingFlowersContainer.appendChild(flower);
+            
+            // Remove flower after animation
+            setTimeout(() => {
+                flower.remove();
+            }, (duration + delay) * 1000);
+        }
+        
+        // Create initial flowers
+        for (let i = 0; i < 20; i++) {
+            const randomType = flowerTypes[Math.floor(Math.random() * flowerTypes.length)];
+            setTimeout(() => {
+                createFlower(randomType);
+            }, i * 500);
+        }
+        
+        // Continuously create new flowers
+        setInterval(() => {
+            const randomType = flowerTypes[Math.floor(Math.random() * flowerTypes.length)];
+            createFlower(randomType);
+        }, 2000);
+    </script>
+</body>
+</html>
+                
