@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marie Curie - The Radiant Ascent</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 50%, #2d1b4e 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,255,157,0.15) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        .hero-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        .hero-portrait {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 5px solid rgba(0,255,157,0.5);
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6em;
+            box-shadow: 0 0 60px rgba(0,255,157,0.4);
+            animation: glow 3s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 60px rgba(0,255,157,0.4); }
+            50% { box-shadow: 0 0 100px rgba(0,255,157,0.7); }
+        }
+
+        h1 {
+            font-size: 5em;
+            font-weight: 300;
+            letter-spacing: 10px;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #00ff9d, #00d4ff, #a8edea, #fed6e3);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 5s ease infinite;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-subtitle {
+            font-size: 1.8em;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            color: #00ff9d;
+        }
+
+        .hero-years {
+            font-size: 1.3em;
+            opacity: 0.7;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            font-size: 2em;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            z-index: 1;
+            color: #00ff9d;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .ladder-container {
+            position: relative;
+            padding: 100px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .ladder-step {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 150px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+            align-items: center;
+        }
+
+        .ladder-step.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .ladder-step:nth-child(even) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .ladder-step:nth-child(even) .step-image {
+            order: 2;
+        }
+
+        .ladder-step:nth-child(even) .step-content {
+            order: 1;
+        }
+
+        .step-image {
+            position: relative;
+            height: 450px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,255,157,0.3);
+            transition: transform 0.5s ease;
+            border: 2px solid rgba(0,255,157,0.3);
+        }
+
+        .step-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 30px 80px rgba(0,255,157,0.5);
+        }
+
+        .step-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0,255,157,0.2), rgba(0,212,255,0.2));
+            z-index: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .step-image:hover::before {
+            opacity: 0.5;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .step-number {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 4em;
+            font-weight: bold;
+            color: #00ff9d;
+            z-index: 2;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        }
+
+        .step-year {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 1.5em;
+            color: #00ff9d;
+            z-index: 2;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 20px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+        }
+
+        .step-content {
+            padding: 20px;
+        }
+
+        .step-title {
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #00ff9d, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+        }
+
+        .step-description {
+            font-size: 1.3em;
+            line-height: 1.8;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .step-achievement {
+            background: rgba(0,255,157,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #00ff9d;
+            margin-bottom: 15px;
+        }
+
+        .step-achievement strong {
+            color: #00ff9d;
+        }
+
+        .step-quote {
+            font-style: italic;
+            font-size: 1.2em;
+            padding: 20px;
+            border-left: 4px solid #00ff9d;
+            background: rgba(0,212,255,0.1);
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .connecting-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #00ff9d 0%, #00d4ff 50%, #667eea 100%);
+            transform: translateX(-50%);
+            opacity: 0.3;
+        }
+
+        .legacy {
+            background: linear-gradient(135deg, #00ff9d 0%, #00d4ff 100%);
+            padding: 100px 20px;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .legacy h2 {
+            font-size: 3.5em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.3);
+            color: #0a0e27;
+        }
+
+        .legacy-content {
+            max-width: 900px;
+            margin: 0 auto;
+            font-size: 1.4em;
+            line-height: 2;
+            text-shadow: 1px 1px 10px rgba(0,0,0,0.2);
+            color: #0a0e27;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 60px auto 0;
+            padding: 0 20px;
+        }
+
+        .achievement-card {
+            background: rgba(10,14,39,0.8);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(0,255,157,0.3);
+            color: white;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-10px);
+            background: rgba(10,14,39,0.95);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border-color: #00ff9d;
+        }
+
+        .achievement-icon {
+    font-size: 3em;
+    margin-bottom: 20px;
+    width: 100%;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.achievement-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.achievement-card:hover .achievement-icon img {
+    transform: scale(1.1);
+}
+        
+
+        .achievement-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #00ff9d;
+        }
+
+        .nobel-section {
+            background: rgba(10,14,39,0.9);
+            padding: 60px 40px;
+            border-radius: 20px;
+            max-width: 1000px;
+            margin: 60px auto;
+            border: 3px solid #00ff9d;
+            box-shadow: 0 0 60px rgba(0,255,157,0.3);
+        }
+
+        .nobel-section h3 {
+            font-size: 2.5em;
+            color: #00ff9d;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .nobel-prizes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .nobel-prize {
+            background: rgba(0,255,157,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(0,255,157,0.3);
+        }
+
+        .nobel-prize h4 {
+            color: #00ff9d;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 1.2em;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3em;
+                letter-spacing: 5px;
+            }
+
+            .ladder-step {
+                grid-template-columns: 1fr !important;
+                gap: 30px;
+            }
+
+            .ladder-step:nth-child(even) .step-image,
+            .ladder-step:nth-child(even) .step-content {
+                order: 0;
+            }
+
+            .step-image {
+                height: 300px;
+            }
+
+            .step-title {
+                font-size: 2em;
+            }
+
+            .connecting-line {
+                display: none;
+            }
+
+            .nobel-prizes {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-portrait"><img src="https://www.rsc.org/getContentAsset/3fc7ea0f-fece-8e8c-fd2b-bc1d2f94e114/97c19dfb-06fc-4638-b657-b9d8300eab48/1931_marie-curie_f2a-1200.jpg?language=en"></div>
+        <h1>MARIE CURIE</h1>
+        <p class="hero-subtitle">From Poverty to Pioneer: The Radiant Journey</p>
+        <p class="hero-years">1867 - 1934</p>
+        <div class="scroll-indicator" onclick="document.querySelector('.ladder-container').scrollIntoView({behavior: 'smooth'})">↓</div>
+    </div>
+
+    <div class="ladder-container">
+        <div class="connecting-line"></div>
+
+        <div class="ladder-step">
+            <div class="step-image">
+                <div class="step-number">01</div>
+                <div class="step-year">1867-1883</div>
+                <div class="image-placeholder"><img src="https://i.pinimg.com/474x/c2/93/7a/c2937a072c66a44071074814e3d2d317.jpg"></div>
+            </div>
+            <div class="step-content">
+                <h2 class="step-title">Marya from Warsaw</h2>
+                <p class="step-description">Born Marya Salomee Sklodowska in Russian occupied Poland, she was forbidden to speak her own language. Polish culture was being systematically erased. Her mother and sister died when she was young, leaving her battling depression throughout her life. Despite poverty and oppression, education was valued in her family. She was a fighter from the start, teaching Polish secretly to peasant children—a crime punishable by exile to Siberia.</p>
+                <div class="step-achievement">
+                    <strong>Early Obstacles:</strong> Russian occupation, forbidden native language, mother and sister's deaths, poverty, women banned from university, lifelong depression
+                </div>
+                <div class="step-quote">"I feel everything very violently… with a physical violence and then I give myself a shaking, the vigor of my nature conquers and it seems to me that I am coming out of a nightmare."</div>
+            </div>
+        </div>
+
+        <div class="ladder-step">
+            <div class="step-image">
+                <div class="step-number">02</div>
+                <div class="step-year">1883-1891</div>
+                <div class="image-placeholder"><img src="https://www.q-files.com/media/article/1168/84a6f9fb-542d-4c7e-80e4-6c3013426d0f.jpg"></div>
+            </div>
+            <div class="step-content">
+                <h2 class="step-title">The Farm Tutor</h2>
+                <p class="step-description">Unable to study in Poland, Marya worked as a farm tutor, saving every coin to send her older sister Bronia to study medicine at the Sorbonne in Paris. For years, she sacrificed her own dreams. As an act of rebellion, she secretly taught Polish to peasant children risking exile. She studied advanced mathematics and science in isolation, teaching herself by candlelight, waiting for the day her sister would finish so she could finally pursue her own education.</p>
+                <div class="step-achievement">
+                    <strong>The Sacrifice:</strong> Worked to fund sister's education first, secretly taught banned Polish language, self-taught advanced subjects in rural isolation, delayed her own dreams for years
+                </div>
+                <div class="step-quote">"First principle: never to let oneself be beaten down by persons or events."</div>
+            </div>
+        </div>
+
+        <div class="ladder-step">
+            <div class="step-image">
+                <div class="step-number">03</div>
+                <div class="step-year">1891-1895</div>
+                <div class="image-placeholder"><img src="https://www.thetimes.com/imageserver/image/%2Fmethode%2Ftimes%2Fprod%2Fweb%2Fbin%2F6ed1fe7d-3e89-4e2c-9710-70c897304766.jpg?crop=1600%2C900%2C0%2C0&resize=360"></div>
+            </div>
+            <div class="step-content">
+                <h2 class="step-title">Marie at the Sorbonne</h2>
+                <p class="step-description">At age 24, Marya arrived in Paris, changed her name to Marie, and enrolled at the Sorbonne which was free but survival was not. Living in a freezing garret room in the Latin Quarter with no heat, she perfected her French while studying physics and mathematics. She was one of only 23 women among 2,000 students at the School of Sciences. In 1893, she became the first woman to earn a physics degree at the Sorbonne, followed by a second degree in mathematics in 1894.</p>
+                <div class="step-achievement">
+                    <strong>Academic Excellence:</strong> First woman with physics degree at Sorbonne (1893), second degree in mathematics (1894), studied in poverty and isolation
+                </div>
+                <div class="step-quote">"All my mind centered on my studies. I divided my time between courses, experimental work and study in the library. In the evening I worked in my room, sometimes very late into the night. All that I saw and learned was a new delight to me. It was like a new world opened to me, the world of science which I was at last permitted to know in all liberty."</div>
+            </div>
+        </div>
+
+        <div class="ladder-step">
+            <div class="step-image">
+                <div class="step-number">04</div>
+                <div class="step-year">1895-1903</div>
+                <div class="image-placeholder"><img src="https://pccm.princeton.edu/sites/g/files/toruqf2196/files/styles/freeform_750w/public/events/marie_curie_0-430x525.jpg?itok=S_R2_hv0"></div>
+            </div>
+            <div class="step-content">
+                <h2 class="step-title">The Scientist in the Glowing Lab</h2>
+                <p class="step-description">With her husband Pierre as her partner and equal, Marie began groundbreaking research in a converted shed. Working with 20kg batches of pitchblende by grinding, dissolving, filtering, precipitating, crystallizing over and over, she isolated polonium (named for her beloved Poland) and radium. The lab glowed with what she called "fairy light." She coined the term "radioactivity" and proved it was an atomic property. In 1902, after years of physically exhausting work, she finally isolated pure radium, determining its atomic weight as 225.93. Her meticulous measurements and new methods opened the door to atomic science.</p>
+                <div class="step-achievement">
+                    <strong>Scientific Breakthroughs:</strong> Discovered polonium and radium, invented the word "radioactivity," proved it's an atomic property, created new methods to discover elements, pioneered atomic physics
+                </div>
+                <div class="step-quote">"I am among those who think that science has great beauty. A scientist in his laboratory is not only a technician: he is also a child placed before natural phenomena which impress him like a fairy tale."</div>
+            </div>
+        </div>
+
+        <div class="ladder-step">
+            <div class="step-image">
+                <div class="step-number">05</div>
+                <div class="step-year">1903-1911</div>
+                <div class="image-placeholder"><img src ="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYvwxH9BC2v2sCRRT-DIF_iLG2X666f1Lc7Y9amMDKenGC3f8Mzj2srC_QFMytjll1pQQ&usqp=CAU"></div>
+            </div>
+            <div class="step-content">
+                <h2 class="step-title">The Double Nobel Laureate</h2>
+                <p class="step-description">In 1903, Marie became the first woman to win a Nobel Prize in Physics (shared with Pierre and Henri Becquerel for discovering radioactivity). She balanced motherhood with her obsessive quest for knowledge, often in panic about her children, battling depression while making precise measurements no other scientist could achieve. After Pierre's tragic death in 1906, she became the first woman professor at the Sorbonne. In 1911, she won her second Nobel Prize in Chemistry for isolating polonium and radium becoming the first person ever to win Nobel Prizes in two different sciences.</p>
+                <div class="step-achievement">
+                    <strong>Historic Firsts:</strong> First woman Nobel Prize winner (1903), first woman professor at Sorbonne, first and only person to win Nobels in two sciences (Physics 1903, Chemistry 1911)
+                </div>
+                <div class="step-quote">"A great discovery does not issue from a scientist's brain ready made, like Minerva springing fully armed from Jupiter's head, it is the fruit of an accumulation of preliminary work."</div>
+            </div>
+        </div>
+
+        <div class="ladder-step">
+            <div class="step-image">
+                <div class="step-number">06</div>
+                <div class="step-year">1914-1934</div>
+                <div class="image-placeholder"><img src="https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer/7c/0e/7c0e6190-1cbc-47b4-b2a3-fc67d43a9986/file-20171006-25752-pat0e4.jpg"></div>
+            </div>
+            <div class="step-content">
+                <h2 class="step-title">The Radiant Legend</h2>
+                <p class="step-description">During WWI, Marie drove mobile X-ray machines "little Curies" to front lines with her daughter Irene, personally training operators and saving thousands of soldiers. She developed radiation therapy protocols still used for cancer treatment today. Despite knowing radiation was destroying her body (cataracts, suppurating fingers, constant illness), she never stopped. She denied to the end that her wounds came from the same source as her power. She was the first woman elected to the French Academy of Medicine, raised two brilliant daughters largely as a single mother, created laboratories and research standards, published detailed books ensuring her discoveries would benefit humanity. She died at 66 from radiation exposure, a famous woman whose work literally powers your computer today.</p>
+                <div class="step-achievement">
+                    <strong>Enduring Impact:</strong> WWI hero saving thousands with X-rays, pioneered radiation therapy, created research protocols and laboratories, first woman in French Academy of Medicine, sacrificed her health for science
+                </div>
+                <div class="step-quote">"I am one of those who think like Nobel, that humanity will draw more good than evil from new discoveries."</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="legacy">
+        <h2>The Radium Queen's Legacy</h2>
+        <div class="legacy-content">
+            <p>From Marya Sklodowska, a Polish girl forbidden to speak her own language, to Marie Curie, the woman who coined "radioactivity" and opened the door to atomic science—her journey is not just about scientific genius. It's about obsessive dedication to understanding, about choosing the quest for knowledge even when it destroys you.</p>
+            <br>
+            <p>She knew the radiation was killing her. The cataracts, the cracked and suppurating skin on her fingertips until she could no longer hold a test tube. Yet she denied to the end that her wounds came from the same source as her power. Was she reckless? Self-destructive? Or was she simply a woman who understood that some discoveries require sacrifice, that imbalance might be the stuff of genius?</p>
+            <br>
+            <p>Her consistent scientific inquiry is what allows you to sit at your computer today. She created protocols, developed standards, built laboratories, published detailed books to share her work openly for humanitarian advances. She raised two brilliant daughters, battled lifelong depression, and broke every glass ceiling in her path—not because it was easy, but because she was driven by an unquenchable desire to know: Why? The question was the quest. The mystery was her true love affair.</p>
+            <br>
+            <p style="font-style: italic; color: rgba(255,255,255,0.9);">"Her wounds came from the same source as her power." — Adrienne Rich</p>
+        </div>
+
+        <div class="nobel-section">
+            <h3>🏆 The Double Nobel Pioneer 🏆</h3>
+            <p style="text-align: center; font-size: 1.2em; color: white; margin-bottom: 30px;">The only person in history to win Nobel Prizes in two different scientific fields</p>
+            <div class="nobel-prizes">
+                <div class="nobel-prize">
+                    <h4>Nobel Prize in Physics</h4>
+                    <p style="color: white; margin-top: 10px;"><strong>1903</strong></p>
+                    <p style="color: white; margin-top: 15px;">For research on radiation phenomena (shared with Pierre Curie and Henri Becquerel)</p>
+                    <p style="color: #00ff9d; margin-top: 15px; font-style: italic;">First woman ever to win a Nobel Prize</p>
+                </div>
+                <div class="nobel-prize">
+                    <h4>Nobel Prize in Chemistry</h4>
+                    <p style="color: white; margin-top: 10px;"><strong>1911</strong></p>
+                    <p style="color: white; margin-top: 15px;">For the discovery of radium and polonium and the isolation of radium</p>
+                    <p style="color: #00ff9d; margin-top: 15px; font-style: italic;">First person to win two Nobel Prizes</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="achievements-grid">
+            <div class="achievement-card">
+                <div class="achievement-icon">⚛️</div>
+                <div class="achievement-title">Scientific Pioneer</div>
+                <p>Discovered radioactivity, polonium, and radium—revolutionizing physics and chemistry</p>
+            </div>
+            <div class="achievement-card">
+                <div class="achievement-icon">🔬</div>
+                <div class="achievement-title">Method Innovator</div>
+                <p>Developed techniques for isolating radioactive isotopes that shaped modern science</p>
+            </div>
+            <div class="achievement-card">
+                <div class="achievement-icon">💉</div>
+                <div class="achievement-title">Medical Revolutionary</div>
+                <p>Her work enabled cancer radiation therapy, saving millions of lives worldwide</p>
+            </div>
+            <div class="achievement-card">
+                <div class="achievement-icon">🚑</div>
+                <div class="achievement-title">War Hero</div>
+                <p>Created mobile X-ray units in WWI, personally trained operators, saved countless soldiers</p>
+            </div>
+            <div class="achievement-card">
+                <div class="achievement-icon">🎓</div>
+                <div class="achievement-title">Education Advocate</div>
+                <p>First female professor at Sorbonne, trained next generation of scientists</p>
+            </div>
+            <div class="achievement-card">
+                <div class="achievement-icon">🌍</div>
+                <div class="achievement-title">Global Icon</div>
+                <p>Shattered gender barriers, inspiring millions of women to pursue science</p>
+            </div>
+        </div>
+        <br><br>
+        <div class= "achievement-card">
+        <H1>Reflection</H1>
+        <div >
+            <div>
+                <img src="https://indonesianpluralities.org/wp-content/uploads/2023/02/Three-Voices-1024x576.jpg">
+</div>
+<br><br><br><br><br><br><br><br><br>
+<div>
+        <h3 align="left"> Marie Curie has always been my source of inspiration, and after watching Three Voices, I was surprised by how strongly the women in the film reminded me of her. Although Curie lived in a different century, a different continent, and within a different intellectual tradition, the shape of her struggle echoes the experiences of the three Muslim women in the documentary. Curie’s brilliance was often hidden beneath the weight of her circumstances. She was denied access to certain forms of education, she faced financial limitations, and she was continually challenged by institutions that were not prepared to recognize the authority of a woman. Even so, she continued to rise step by step.<br><br>
+
+The women in Three Voices climb a similar ladder. Their ascent is not towards scientific recognition, but towards public courage and moral clarity. One speaks from religious ethics, another from legal reasoning, and another from institutional responsibility. Their perspectives are distinct, yet they share a deep commitment to protecting women from harm and reshaping the social landscape of Indonesia. Like Curie, they confront structures that were not created for them. Like Curie, they move forward with determination.<br><br>
+
+Marie Curie’s life represents a practice of disciplined defiance, a refusal to allow doubt or resistance to diminish her purpose. The women in Three Voices embody the same strength. Curie revealed invisible truths through her scientific work. These women reveal unspoken truths through testimony, advocacy, and collective reflection. Curie once said that nothing in life is to be feared and that everything is to be understood. The film demonstrates this idea through women who turn confusion into understanding, silence into conversation, and vulnerability into shared power.<br><br>
+
+Both Curie and the women in this film remind me that a woman’s rise is not defined by ease or recognition. It is a quiet, persistent transformation that changes the world from within.</h3>
+</div>
+</div>
+</div>
+    </div>
+
+    <div class="footer">
+        <p style="font-size: 1.4em; color: #00ff9d; margin-bottom: 20px;">"Nothing in life is to be feared, it is only to be understood."</p>
+        <p>Marie Curie died on July 4, 1934, from aplastic anemia caused by prolonged radiation exposure.</p>
+        <p>Her papers from the 1890s are still too radioactive to handle without protection.</p>
+        <p style="margin-top: 30px; color: #00ff9d;">Her legacy illuminates the world still.</p>
+        <p> 
+    </div>
+
+    <script>
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.ladder-step').forEach(step => {
+            observer.observe(step);
+        });
+
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+                hero.style.opacity = 1 - (scrolled / 800);
+            }
+        });
+    </script>
+</body>
+</html>
